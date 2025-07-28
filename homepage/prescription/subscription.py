@@ -14,18 +14,18 @@ class TesseraSanitaria :
 
     def __init__(self):
         self.codice_fiscale = input(" CODICE FISCALE : ")
-        controllo(codice_fiscale, 16) # nel codice fiscale si contano 16 caratteri alfanumerici
+        controllo(self.codice_fiscale, 16) # nel codice fiscale si contano 16 caratteri alfanumerici
         self.sesso = input(" SESSO : ")
-        controllo(sesso, 1)
+        controllo(self.sesso, 1)
         self.luogo_nascita = input(" LUOGO DI NASCITA : ")
         self.provincia = input(" PROVINCIA : ")
-        controllo(provincia, 2)
+        controllo(self.provincia, 2)
         self.data_nascita = input(" DATA DI NASCITA (gg/mm/aaaa) : ")
-        controllo(data_nascita, 10)
+        controllo(self.data_nascita, 10)
         self.data_scadenza = input(" DATA DI SCADENZA (gg/mm/aaaa) : ")
-        controllo(data_scadenza, 10)
+        controllo(self.data_scadenza, 10)
         self.numero_identificazione_tessera = input(" NUMERO IDENTIFICAZIONE TESSERA : ")
-        controllo(numero_identificazione_tessera, 20)
+        controllo(self.numero_identificazione_tessera, 20)
 
 
 class Cliente :
