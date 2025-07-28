@@ -51,12 +51,20 @@ def registrarsi (lista_clienti: Cliente) -> ProfiloUtente :
             break
         else :
             lista_clienti.append(cliente)
+            # creazione profilo utente
+            profilo.__init__(cliente)
+            return profilo
             print(" registrazione effettuata con successo : ")
 
-    #creazione profilo utente
-    profilo.__init__(cliente)
 
 
+persona: Cliente
+lista: Cliente
+profilo : ProfiloUtente
+
+persona.__init__()
+lista = []
+profilo = registrarsi(lista)
 
 
 
