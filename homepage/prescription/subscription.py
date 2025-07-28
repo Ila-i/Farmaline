@@ -35,6 +35,6 @@ class ProfiloUtente :
         print( "per registrarsi inserire i dati richiesti : ")
         cliente.__init__()
         for i in range(len(lista_clienti)) :
-ciao
+
 
 
