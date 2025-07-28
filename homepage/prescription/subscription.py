@@ -24,7 +24,7 @@ class Cliente :
     def __init__(self):
         self.nome= input("Inserire il proprio nome : ")
         self.cognome = input("Inserire il proprio cognome : ")
-        self.t_s.__init__()
+        self.t_s = TesseraSanitaria()
 
 class ProfiloUtente :
     nome_utente:str
@@ -32,39 +32,36 @@ class ProfiloUtente :
     utente: Cliente
 
     def __init__(self,cliente : Cliente):
-        utente = cliente
-        nome_utente = input(" inserire un nome utente : ") # inserire controllo per corrispondenza profilo utente
-        password = input(" inserire una password : ")
+        self.utente = cliente
+        self.nome_utente = input(" inserire un nome utente : ") # inserire controllo per corrispondenza profilo utente
+        self.password = input(" inserire una password : ")
 
 
 
-def registrarsi (lista_clienti: Cliente) -> ProfiloUtente :
-    cliente: Cliente
-    profilo : ProfiloUtente
+def registrarsi (lista_clienti : list[Cliente]) -> ProfiloUtente :
+    cliente = Cliente()
     print( "per registrarsi inserire i dati richiesti : ")
-    cliente.__init__()
-
     #controllo esistenza cliente nel database
     for i in range(len(lista_clienti)) :
-        if cliente == lista_clienti[i] :
+        if cliente == lista_clienti[i]:
             print(" utente già registrato ")
             break
-        else :
+        else:
             lista_clienti.append(cliente)
             # creazione profilo utente
-            profilo.__init__(cliente)
+            profilo= ProfiloUtente(cliente)
+            print(f"""  registrazione effettuata con successo 
+            Benvenuto {profilo.nome_utente} !""")
             return profilo
-            print(" registrazione effettuata con successo : ")
 
 
 
-persona: Cliente
-lista: Cliente
-profilo : ProfiloUtente
 
-persona.__init__()
+
+print("inizializzazione lista ")
 lista = []
+print("inizio registrazione")
 profilo = registrarsi(lista)
-
-
+print("stampa nuova lista ")
+print(lista)
 
