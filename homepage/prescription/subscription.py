@@ -22,7 +22,7 @@ class TesseraSanitaria :
         self.provincia = self.controllo(" PROVINCIA : ", 2)
         self.data_nascita = self.controllo(" DATA DI NASCITA (gg/mm/aaaa) : ", 10)
         self.data_scadenza = self.controllo(" DATA DI SCADENZA (gg/mm/aaaa) : ", 10)
-        self.numero_identificazione_tessera = self.controllo(" NUMERO IDENTIFICAZIONE TESSERA SANITARIA : ", 20)# sulla tessera sanitaria fisica sono 20 caratteri alfanumerici
+        self.numero_identificazione_tessera = self.controllo(" NUMERO IDENTIFICAZIONE TESSERA : ", 20)# sulla tessera sanitaria fisica sono 20 caratteri alfanumerici
 
 
 class Cliente :
