@@ -52,10 +52,9 @@ def registrarsi (lista_clienti: Cliente) -> ProfiloUtente :
         else :
             lista_clienti.append(cliente)
             print(" registrazione effettuata con successo : ")
-
-    #creazione profilo utente
-    profilo.__init__(cliente)
-
+            #creazione profilo utente
+            profilo.__init__(cliente)
+            return profilo
 
 
 
