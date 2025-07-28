@@ -7,29 +7,21 @@ class TesseraSanitaria :
     data_scadenza: str
     numero_identificazione_tessera: str
 
-    def controllo(self, parametro: str, lunghezza: int) -> str :
-       parametro = input()
-
+    def controllo(self, messaggio: str, lunghezza: int) -> str : #controllo del numero dei caratteri alfanumerici( va aggiunto se si riesce il controllo più specifico o messo come eccezione
+       parametro = input(messaggio)
        while len(parametro) != lunghezza :
-            print(f" il parametro non è valido, riprovare")
-            parametro = input()
+            parametro = input(f" il parametro non è valido, riprovare : ")
 
        return parametro
 
     def __init__(self):
-        print(" CODICE FISCALE : ")
-        self.codice_fiscale =self.controllo(self.codice_fiscale, 16) # nel codice fiscale si contano 16 caratteri alfanumerici
-        print(" SESSO : ")
-        self.sesso = self.controllo(self.sesso, 1)
+        self.codice_fiscale = self.controllo(" CODICE FISCALE :", 16) # nel codice fiscale si contano 16 caratteri alfanumerici
+        self.sesso = self.controllo(" SESSO : ", 1)
         self.luogo_nascita = input(" LUOGO DI NASCITA : ")
-        print(" PROVINCIA : ")
-        self.provincia = self.controllo(self.provincia, 2)
-        print(" DATA DI NASCITA (gg/mm/aaaa) : ")
-        self.data_nascita = self.controllo(self.data_nascita, 10)
-        print(" DATA DI SCADENZA (gg/mm/aaaa) : ")
-        self.data_scadenza = self.controllo(self.data_scadenza, 10)
-        input(" NUMERO IDENTIFICAZIONE TESSERA : ")
-        self.numero_identificazione_tessera = self.controllo(self.numero_identificazione_tessera, 20)# sulla tessera fisica sono 20 caratteri alfanumerici
+        self.provincia = self.controllo(" PROVINCIA : ", 2)
+        self.data_nascita = self.controllo(" DATA DI NASCITA (gg/mm/aaaa) : ", 10)
+        self.data_scadenza = self.controllo(" DATA DI SCADENZA (gg/mm/aaaa) : ", 10)
+        self.numero_identificazione_tessera = self.controllo(" NUMERO IDENTIFICAZIONE TESSERA : ", 20)# sulla tessera fisica sono 20 caratteri alfanumerici
 
 
 class Cliente :
