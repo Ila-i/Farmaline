@@ -7,14 +7,26 @@ class TesseraSanitaria :
     data_scadenza: str
     numero_identificazione_tessera: str
 
+    def controllo(self, parametro: str, lunghezza: int):
+       while len(parametro) != lunghezza :
+            print(f" il parametro non è valido, riprovare")
+            parametro = input()
+
     def __init__(self):
         self.codice_fiscale = input(" CODICE FISCALE : ")
+        controllo(codice_fiscale, 16) # nel codice fiscale si contano 16 caratteri alfanumerici
         self.sesso = input(" SESSO : ")
+        controllo(sesso, 1)
         self.luogo_nascita = input(" LUOGO DI NASCITA : ")
         self.provincia = input(" PROVINCIA : ")
-        self.data_nascita = input(" DATA DI NASCITA : ")
-        self.data_scadenza = input(" DATA DI SCADENZA : ")
+        controllo(provincia, 2)
+        self.data_nascita = input(" DATA DI NASCITA (gg/mm/aaaa) : ")
+        controllo(data_nascita, 10)
+        self.data_scadenza = input(" DATA DI SCADENZA (gg/mm/aaaa) : ")
+        controllo(data_scadenza, 10)
         self.numero_identificazione_tessera = input(" NUMERO IDENTIFICAZIONE TESSERA : ")
+        controllo(numero_identificazione_tessera, 20)
+
 
 class Cliente :
     t_s: TesseraSanitaria #t_s abbreviazione tessera sanitaria
@@ -25,6 +37,7 @@ class Cliente :
         self.nome= input("Inserire il proprio nome : ")
         self.cognome = input("Inserire il proprio cognome : ")
         self.t_s = TesseraSanitaria()
+    #def ricerca ()# da database per controllo su presenza o meno della persona
 
 class ProfiloUtente :
     nome_utente:str
