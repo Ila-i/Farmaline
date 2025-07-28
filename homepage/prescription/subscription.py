@@ -15,6 +15,7 @@ class TesseraSanitaria :
        return parametro
 
     def __init__(self):
+        print( " Di seguito si inseriscano i dati della tessera sanitaria : ")
         self.codice_fiscale = self.controllo(" CODICE FISCALE :", 16) # nel codice fiscale si contano 16 caratteri alfanumerici
         self.sesso = self.controllo(" SESSO : ", 1)
         self.luogo_nascita = input(" LUOGO DI NASCITA : ")
