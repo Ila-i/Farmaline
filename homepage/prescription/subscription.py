@@ -14,6 +14,9 @@ class TesseraSanitaria :
 
        return parametro
 
+
+#TODO quando possibile inserire controllo data di nascita e scadenza tessera sanitaria
+
     def __init__(self):
         print( " Di seguito si inseriscano i dati della tessera sanitaria : ")
         self.codice_fiscale = self.controllo(" CODICE FISCALE :", 16) # nel codice fiscale si contano 16 caratteri alfanumerici
