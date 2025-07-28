@@ -43,16 +43,16 @@ def registrarsi (lista_clienti : list[Cliente]) -> ProfiloUtente :
     print( "per registrarsi inserire i dati richiesti : ")
     #controllo esistenza cliente nel database
     for i in range(len(lista_clienti)) :
-        if cliente == lista_clienti[i]:
+        if cliente.t_s.codice_fiscale == lista_clienti[i].t_s.codice_fiscale:
             print(" utente già registrato ")
             break
-        else:
-            lista_clienti.append(cliente)
-            # creazione profilo utente
-            profilo= ProfiloUtente(cliente)
-            print(f"""  registrazione effettuata con successo 
-            Benvenuto {profilo.nome_utente} !""")
-            return profilo
+
+    lista_clienti.append(cliente)
+    # creazione profilo utente
+    profilo= ProfiloUtente(cliente)
+    print(f"""  registrazione effettuata con successo 
+    Benvenuto {profilo.nome_utente} !""")
+    return profilo
 
 
 
@@ -60,8 +60,11 @@ def registrarsi (lista_clienti : list[Cliente]) -> ProfiloUtente :
 
 print("inizializzazione lista ")
 lista = []
-print("inizio registrazione")
-profilo = registrarsi(lista)
-print("stampa nuova lista ")
-print(lista)
+controllo = "go"
+while controllo != "exit" :
+    print("inizio registrazione")
+    profilo = registrarsi(lista)
+    controllo = input("controllo")
+
+
 
