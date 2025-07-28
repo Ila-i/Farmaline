@@ -29,12 +29,34 @@ class Cliente :
 class ProfiloUtente :
     nome_utente:str
     password: str
+    utente: Cliente
 
-    def registrarsi (lista_clienti: Cliente ) -> Cliente :
-        cliente: Cliente
-        print( "per registrarsi inserire i dati richiesti : ")
-        cliente.__init__()
-        for i in range(len(lista_clienti)) :
+    def __init__(self,cliente : Cliente):
+        utente = cliente
+        nome_utente = input(" inserire un nome utente : ") # inserire controllo per corrispondenza profilo utente
+        password = input(" inserire una password : ")
+
+
+
+def registrarsi (lista_clienti: Cliente) -> ProfiloUtente :
+    cliente: Cliente
+    profilo : ProfiloUtente
+    print( "per registrarsi inserire i dati richiesti : ")
+    cliente.__init__()
+
+    #controllo esistenza cliente nel database
+    for i in range(len(lista_clienti)) :
+        if cliente == lista_clienti[i] :
+            print(" utente già registrato ")
+            break
+        else :
+            lista_clienti.append(cliente)
+            print(" registrazione effettuata con successo : ")
+
+    #creazione profilo utente
+    profilo.__init__(cliente)
+
+
 
 
 
