@@ -106,7 +106,7 @@ def registrarsi (user : str) -> ProfiloUtente :
         if farmacista_esistente is not None:
             print(" utente già registrato ")
         else:
-        # creazione profilo utente
+
         profilo = ProfiloUtente(farmacista)
         print(f"""  registrazione effettuata con successo 
                     Benvenuto {profilo.nome_utente} !""")
