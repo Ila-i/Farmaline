@@ -109,3 +109,4 @@ while controllo != "exit" :
 
 
 
+#pip install psycopg2-binary
