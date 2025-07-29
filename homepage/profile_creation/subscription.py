@@ -84,6 +84,23 @@ def registrarsi (user : str) -> ProfiloUtente :
 
     if user == "Cliente" :
         cliente = Cliente()
+        from sqlalchemy import create_engine, text
+
+        engine = create_engine("postgresql+psycopg2://postgres:tuapassword@localhost:5432/Farmaline")
+
+        codice_fiscale = "RSSMRA85M01H501Z"
+
+        with engine.connect() as conn:
+            result = conn.execute(
+                text("SELECT 1 FROM clienti WHERE codice_fiscale = :cf"),
+                {"cf": codice_fiscale}
+            ).scalar()
+
+        if result:
+            print("Cliente trovato")
+        else:
+            print("Cliente non trovato")
+
         clienti = session.query(Clienti).filter_by(CodiceFiscale=cliente.t_s.codice_fiscale).all()
         #controllo esistenza cliente nel database
         for cliente in clienti :
