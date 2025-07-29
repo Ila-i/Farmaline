@@ -1,4 +1,7 @@
 from abc import ABC, abstractmethod
+import pandas as pd
+import squalchemy
+
 
 class Persona (ABC) :
     nome: str
