@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 import pandas as pd
-import squalchemy
+from sqlalchemy import sessionmaker, create_engine
 
-engine = squalchemy.create_engine('postgresql:/postgres@PostgreSQL17/Farmaline')
+engine = create_engine('postgresql:/postgres@PostgreSQL17/Farmaline')
 session = sessionmaker(bind=engine)
 
 class Persona (ABC) :
@@ -78,7 +78,7 @@ class ProfiloUtente :
 
 def registrarsi (user : str) -> ProfiloUtente :
 
-    if isinstance(user , "Cliente" ):
+    if user == "Cliente" :
         cliente = Cliente()
         clienti = session.query(Clienti).filter_by(CodiceFiscale=cliente.t_s.codice_fiscale).all()
         #controllo esistenza cliente nel database
@@ -93,7 +93,7 @@ def registrarsi (user : str) -> ProfiloUtente :
         session.commit()
         return profilo
 
-    elif isinstance(user , "Farmacista" ):
+    elif user == "Farmacista" :
         farmacista = Farmacista()
         farmacisti = session.query(Farmacisti).filter_by(matricola =farmacista.t_p.n_matricola).all()
         # controllo esistenza farmacista nel database
@@ -114,7 +114,7 @@ def registrarsi (user : str) -> ProfiloUtente :
 
 controllo = "go"
 while controllo != "exit" :
-    selzezione = input(""" Selezionare il tipo di profilo che si desidera creare ( scrivere una delle seguenti opzioni) :
+    selezione = input(""" Selezionare il tipo di profilo che si desidera creare ( scrivere una delle seguenti opzioni) :
                -Cliente
                -Farmacista 
                """)
