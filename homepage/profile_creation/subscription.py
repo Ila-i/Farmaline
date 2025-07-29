@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 import squalchemy
-import psycopg2
+
+engine = squalchemy.create_engine('postgresql:/postgres@PostgreSQL17/Farmaline')
+session = sessionmaker(bind=engine)
 
 class Persona (ABC) :
     nome: str
@@ -74,50 +76,51 @@ class ProfiloUtente :
 
 
 
-def registrarsi (user : Persona) -> ProfiloUtente :
+def registrarsi (user : str) -> ProfiloUtente :
 
-    print("per registrarsi inserire i dati richiesti : ")
-
-    if isinstance(user , Cliente ):
+    if isinstance(user , "Cliente" ):
+        cliente = Cliente()
+        clienti = session.query(Clienti).filter_by(CodiceFiscale=cliente.t_s.codice_fiscale).all()
         #controllo esistenza cliente nel database
-        for i in range(len(lista_clienti)) :
-            if cliente.t_s.codice_fiscale == lista_clienti[i].t_s.codice_fiscale:
-                print(" utente già registrato ")
-                break
-
-    elif isinstance(user , Farmacista ):
-        # controllo esistenza farmacista nel database
-        for i in range(len(lista_clienti)):
-            if cliente.t_s.codice_fiscale == lista_clienti[i].t_s.codice_fiscale:
-                print(" utente già registrato ")
-                break
-    else :
-        lista_clienti.append(cliente)
+        for cliente in clienti :
+            print(" utente già registrato ")
+            break
         # creazione profilo utente
-        profilo = ProfiloUtente(user)
+        profilo = ProfiloUtente(cliente)
         print(f"""  registrazione effettuata con successo 
                     Benvenuto {profilo.nome_utente} !""")
+        session.add(cliente)
+        session.commit()
+        return profilo
+
+    elif isinstance(user , "Farmacista" ):
+        farmacista = Farmacista()
+        farmacisti = session.query(Farmacisti).filter_by(matricola =farmacista.t_p.n_matricola).all()
+        # controllo esistenza farmacista nel database
+        for farmacista in Farmacisti:
+            print(" utente già registrato ")
+            break
+        # creazione profilo utente
+        profilo = ProfiloUtente(farmacista)
+        print(f"""  registrazione effettuata con successo 
+                    Benvenuto {profilo.nome_utente} !""")
+        session.add(farmacista)
+        session.commit()
         return profilo
 
 
 
 #verifica di funzioanmento del codice
-print("inizializzazione lista ")
-lista = []
+
 controllo = "go"
 while controllo != "exit" :
-    print("inizio registrazione")
-    profilo = registrarsi(lista)
+    selzezione = input(""" Selezionare il tipo di profilo che si desidera creare ( scrivere una delle seguenti opzioni) :
+               -Cliente
+               -Farmacista 
+               """)
+
+    profilo = registrarsi(selezione)
     controllo = input("controllo")
 
-conn = psycopg2.connect(
-    host="localhost",
-    database="tuo_database",     # Sostituisci con il nome del tuo DB
-    user="tuo_utente",           # Sostituisci con il tuo utente
-    password="tua_password"      # Sostituisci con la tua password
-)
-
-# Creazione del cursore
-#cursor = conn.cursor()
 
 
