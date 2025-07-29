@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 import squalchemy
-
+import psycopg2
 
 class Persona (ABC) :
     nome: str
@@ -110,5 +110,14 @@ while controllo != "exit" :
     profilo = registrarsi(lista)
     controllo = input("controllo")
 
+conn = psycopg2.connect(
+    host="localhost",
+    database="tuo_database",     # Sostituisci con il nome del tuo DB
+    user="tuo_utente",           # Sostituisci con il tuo utente
+    password="tua_password"      # Sostituisci con la tua password
+)
+
+# Creazione del cursore
+#cursor = conn.cursor()
 
 
