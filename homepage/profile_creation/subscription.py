@@ -1,14 +1,17 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 import sqlalchemy
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
+from sqlalchemy import create_engine, text
+#from sqlalchemy.ext.declarative import declarative_base
+#from sqlalchemy import Column, String, Integer
 
 #engine = create_engine('postgresql:/postgres@PostgreSQL17/Farmaline')
 engine = create_engine('postgresql+psycopg2://postgresql:postgres@localhost:5432/Farmaline')
 
-session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=engine)
+session = Session()
+
 
 class Persona (ABC) :
     nome: str
@@ -82,25 +85,37 @@ class ProfiloUtente :
 
 
 def registrarsi (user : str) -> ProfiloUtente :
-
-    if user == "Cliente" :
+    if user == "Cliente":
         cliente = Cliente()
-        clienti = session.query(Clienti).filter_by(CodiceFiscale=cliente.t_s.codice_fiscale).all()
-        #controllo esistenza cliente nel database
-        for cliente in clienti :
-            print(" utente già registrato ")
-            break
-        # creazione profilo utente
-        profilo = ProfiloUtente(cliente)
-        print(f"""  registrazione effettuata con successo 
-                    Benvenuto {profilo.nome_utente} !""")
-        session.add(cliente)
-        session.commit()
-        return profilo
+        # controllo esistenza cliente nel database
+        # Cerco clienti con quel codice fiscale
+    cliente=Cliente()
+    with engine.connect() as conn:
+        result = conn.execute(
+            text("SELECT CodiceFiscaLe FROM clienti WHERE codice_fiscale = cliente.t_s.codice_fiscale")
+        ).scalar()
 
-    elif user == "Farmacista" :
+    if result:
+        print("Cliente trovato")
+    else:
+        print("Cliente non trovato")
+
+#       clienti = session.query(Cliente).filter_by(codice_fiscale=cliente.t_s.codice_fiscale).all()
+
+    if clienti is not None:
+            print("Utente già registrato")
+            return None
+    else:
+            # creazione profilo e inserimento
+            profilo = ProfiloUtente(cliente)
+            session.add(cliente)
+            session.commit()
+            print(f"Registrazione effettuata con successo. Benvenuto {profilo.nome_utente}!")
+            return profilo
+
+        elif user == "Farmacista":
         farmacista = Farmacista()
-        farmacisti = session.query(Farmacisti).filter_by(matricola =farmacista.t_p.n_matricola).all()
+        farmacisti = session.query(Farmacisti).filter_by(matricola=farmacista.t_p.n_matricola).all()
         # controllo esistenza farmacista nel database
         for farmacista in Farmacisti:
             print(" utente già registrato ")
@@ -108,11 +123,10 @@ def registrarsi (user : str) -> ProfiloUtente :
         # creazione profilo utente
         profilo = ProfiloUtente(farmacista)
         print(f"""  registrazione effettuata con successo 
-                    Benvenuto {profilo.nome_utente} !""")
+                      Benvenuto {profilo.nome_utente} !""")
         session.add(farmacista)
         session.commit()
         return profilo
-
 
 
 #verifica di funzioanmento del codice
