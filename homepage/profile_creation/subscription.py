@@ -1,9 +1,8 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 import sqlalchemy
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
+from sqlalchemy import create_engine, text
 
 engine = create_engine('postgresql+psycopg2://postgresql:postgres@localhost:5432/Farmaline')
 
@@ -84,32 +83,29 @@ def registrarsi (user : str) -> ProfiloUtente :
 
     if user == "Cliente" :
         cliente = Cliente()
-        from sqlalchemy import create_engine, text
-
-        engine = create_engine("postgresql+psycopg2://postgres:tuapassword@localhost:5432/Farmaline")
-
-        codice_fiscale = "RSSMRA85M01H501Z"
 
         with engine.connect() as conn:
             result = conn.execute(
                 text("SELECT 1 FROM clienti WHERE codice_fiscale = :cf"),
-                {"cf": codice_fiscale}
+                {"cf": cliente.t_s.codice_fiscale}
             ).scalar()
 
         if result:
             print("Cliente trovato")
         else:
             print("Cliente non trovato")
+            profilo = ProfiloUtente(cliente)
+            return profilo
 
-        clienti = session.query(Clienti).filter_by(CodiceFiscale=cliente.t_s.codice_fiscale).all()
+    print("""  clienti = session.query(Clienti).filter_by(CodiceFiscale=cliente.t_s.codice_fiscale).all()
         #controllo esistenza cliente nel database
         for cliente in clienti :
             print(" utente già registrato ")
             break
         # creazione profilo utente
         profilo = ProfiloUtente(cliente)
-        print(f"""  registrazione effettuata con successo 
-                    Benvenuto {profilo.nome_utente} !""")
+        print(f  registrazione effettuata con successo 
+                    Benvenuto {profilo.nome_utente} !)
         session.add(cliente)
         session.commit()
         return profilo
@@ -125,11 +121,11 @@ def registrarsi (user : str) -> ProfiloUtente :
         else:
 
         profilo = ProfiloUtente(farmacista)
-        print(f"""  registrazione effettuata con successo 
-                    Benvenuto {profilo.nome_utente} !""")
+        print(f registrazione effettuata con successo 
+                    Benvenuto {profilo.nome_utente} !)
         session.add(farmacista)
         session.commit()
-        return profilo
+        return profilo""")
 
 
 
