@@ -1,8 +1,13 @@
 from abc import ABC, abstractmethod
 import pandas as pd
-from sqlalchemy import sessionmaker, create_engine
+import sqlalchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('postgresql:/postgres@PostgreSQL17/Farmaline')
+
+#engine = create_engine('postgresql:/postgres@PostgreSQL17/Farmaline')
+engine = create_engine('postgresql+psycopg2://postgresql:postgres@localhost:5432/Farmaline')
+
 session = sessionmaker(bind=engine)
 
 class Persona (ABC) :
