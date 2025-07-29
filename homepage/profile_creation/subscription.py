@@ -129,7 +129,7 @@ def registrarsi (user : str) -> ProfiloUtente :
         return profilo
 
 
-#verifica di funzioanmento del codice
+#verifica di funzioanmento del codice.
 
 controllo = "go"
 while controllo != "exit" :
