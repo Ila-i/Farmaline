@@ -5,7 +5,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 
-#engine = create_engine('postgresql:/postgres@PostgreSQL17/Farmaline')
 engine = create_engine('postgresql+psycopg2://postgresql:postgres@localhost:5432/Farmaline')
 
 session = sessionmaker(bind=engine)
@@ -85,33 +84,35 @@ def registrarsi (user : str) -> ProfiloUtente :
 
     if user == "Cliente" :
         cliente = Cliente()
-        clienti = session.query(Clienti).filter_by(CodiceFiscale=cliente.t_s.codice_fiscale).all()
-        #controllo esistenza cliente nel database
-        for cliente in clienti :
+        # controllo esistenza cliente nel database
+        cliente_esistente = session.query(Clienti).filter_by(CodiceFiscale=cliente.t_s.codice_fiscale).first()
+
+        if cliente_esistente is not None :
             print(" utente già registrato ")
-            break
-        # creazione profilo utente
-        profilo = ProfiloUtente(cliente)
-        print(f"""  registrazione effettuata con successo 
-                    Benvenuto {profilo.nome_utente} !""")
-        session.add(cliente)
-        session.commit()
-        return profilo
+            return None
+        else :
+            profilo = ProfiloUtente(cliente)
+            print(f"""  registrazione effettuata con successo 
+                        Benvenuto {profilo.nome_utente} !""")
+            session.add(cliente)
+            session.commit()
+            return profilo
 
     elif user == "Farmacista" :
         farmacista = Farmacista()
-        farmacisti = session.query(Farmacisti).filter_by(matricola =farmacista.t_p.n_matricola).all()
         # controllo esistenza farmacista nel database
-        for farmacista in Farmacisti:
+        farmacista_esistente = session.query(Farmacisti).filter_by(matricola =farmacista.t_p.n_matricola).first()
+
+        if farmacista_esistente is not None:
             print(" utente già registrato ")
-            break
+        else:
         # creazione profilo utente
-        profilo = ProfiloUtente(farmacista)
-        print(f"""  registrazione effettuata con successo 
-                    Benvenuto {profilo.nome_utente} !""")
-        session.add(farmacista)
-        session.commit()
-        return profilo
+            profilo = ProfiloUtente(farmacista)
+            print(f"""  registrazione effettuata con successo 
+                        Benvenuto {profilo.nome_utente} !""")
+            session.add(farmacista)
+            session.commit()
+            return profilo
 
 
 
